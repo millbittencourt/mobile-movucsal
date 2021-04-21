@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// This is the stateful widget that the main application instantiates.
@@ -7,15 +8,20 @@ class Dropdown extends StatefulWidget {
   final String dropdownMessage;
   //chamou quem trabalha
   @override
-  _MyButton createState() => _MyButton();
+  _Dropdown createState() => _Dropdown();
 }
 
-class _MyButton extends State<Dropdown> {
+class _Dropdown extends State<Dropdown> {
   String dropdownValue;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     dropdownValue = widget.dropdownMessage;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),

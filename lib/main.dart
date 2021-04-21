@@ -7,15 +7,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
+  static const String _title = 'Welcome to MovUCSal';
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: _title,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: MyHomePage(title: 'Welcome to MovUCSal'),
+      home: MyHomePage(title: _title),
     );
   }
 }

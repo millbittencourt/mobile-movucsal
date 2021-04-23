@@ -1,49 +1,36 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 
 /// This is the stateful widget that the main application instantiates.
-class Dropdown extends StatefulWidget {
+class DropdownForm extends StatefulWidget {
   //pegou a string
-  const Dropdown({Key key, this.dropdownMessage}) : super(key: key);
+  const DropdownForm({Key key, this.dropdownMessage}) : super(key: key);
   final String dropdownMessage;
   //chamou quem trabalha
   @override
-  _Dropdown createState() => _Dropdown();
+  _DropdownForm createState() => _DropdownForm();
 }
 
-class _Dropdown extends State<Dropdown> {
-  String dropdownValue;
+class _DropdownForm extends State<DropdownForm> {
 
   @override
   void initState() {
     super.initState();
-    dropdownValue = widget.dropdownMessage;
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 20,
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>[widget.dropdownMessage, 'One', 'Two', 'Three', 'Four'] //todo: lista da api
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+    String spotId;
+    return DropDownField(
+        onValueChanged: (dynamic value) {
+          spotId = value;
+        },
+        value: spotId,
+        required: false,
+        hintText: widget.dropdownMessage,
+        labelText: widget.dropdownMessage,
+        items: <String>['One', 'Two', 'Three', 'Four'], //todo: lista da api,
+      );
   }
+
 }

@@ -1,10 +1,11 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class DropdownForm extends StatefulWidget {
   //pegou a string
-  const DropdownForm({Key key, this.dropdownMessage}) : super(key: key);
+  const DropdownForm({required this.dropdownMessage}) : super();
   final String dropdownMessage;
   //chamou quem trabalha
   @override
@@ -20,7 +21,7 @@ class _DropdownForm extends State<DropdownForm> {
 
   @override
   Widget build(BuildContext context) {
-    String spotId;
+    String spotId = '';
     return DropDownField(
         onValueChanged: (dynamic value) {
           spotId = value;

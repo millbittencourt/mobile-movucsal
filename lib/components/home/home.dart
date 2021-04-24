@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_movucsal/components/caminho/path.dart';
 
 import 'dropdown.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required this.title}) : super();
 
   final String title;
 
@@ -12,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final String _dropdownTwo = 'Selecione o Ponto Final';
     final String _dropdownChooseMessage = 'Escolha seu ponto inicial \n e de destino';
 
+
     return Column(
       children: <Widget>[
         Text(
@@ -49,8 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
         SizedBox(height: 30),
         ElevatedButton(
           onPressed: () {
-            print('botao apertado, vai buscar minha rota');
-          }, //todo: tentar deixar generico + enviar requisicao pra API
+             Navigator.push(
+               context,
+               MaterialPageRoute(builder: (context) => SecondRoute(title: '',)), //todo: enviar os dois pontos
+             );
+          },
           child: Text('Pesquisar rota'),
         ),
         SizedBox(height: 70),

@@ -14,6 +14,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String spotOneId = '';
+  String spotTwoId = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,18 +54,29 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 40),
-        DropdownForm(dropdownMessage: _dropdownOne),
+        DropdownForm(
+          dropdownMessage: _dropdownOne,
+          onCountChanged: (String val) {
+            setState(() => spotOneId = val);
+          },
+        ),
         SizedBox(height: 15),
-        DropdownForm(dropdownMessage: _dropdownTwo),
+        DropdownForm(
+          dropdownMessage: _dropdownTwo,
+          onCountChanged: (String val) {
+            setState(() => spotTwoId = val);
+          },
+        ),
         SizedBox(height: 30),
         ElevatedButton(
           onPressed: () {
-            pesquisarPontos('1', '2')
+            pesquisarPontos(spotOneId, spotTwoId)
                 ? //aqui ja preciso ter os ids
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SecondRoute(title: '')) //todo: enviar os dois pontos
+                        builder: (context) =>
+                            SecondRoute(title: '')) //todo: enviar o caminho
                     )
                 : Navigator.push(
                     context,

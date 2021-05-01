@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_movucsal/components/caminho/path.dart';
+import 'package:mobile_movucsal/components/errorPage.dart';
 
 import 'dropdown.dart';
 
@@ -13,7 +14,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Column searchPathBySpots() {
     final String _dropdownOne = 'Selecione o Ponto Inicial';
     final String _dropdownTwo = 'Selecione o Ponto Final';
-    final String _dropdownChooseMessage = 'Escolha seu ponto inicial \n e de destino';
-
+    final String _dropdownChooseMessage =
+        'Escolha seu ponto inicial \n e de destino';
 
     return Column(
       children: <Widget>[
@@ -52,15 +52,28 @@ class _MyHomePageState extends State<MyHomePage> {
         SizedBox(height: 30),
         ElevatedButton(
           onPressed: () {
-             Navigator.push(
-               context,
-               MaterialPageRoute(builder: (context) => SecondRoute(title: '',)), //todo: enviar os dois pontos
-             );
+            pesquisarPontos('1', '2')
+                ? //aqui ja preciso ter os ids
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SecondRoute(title: '')) //todo: enviar os dois pontos
+                    )
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ErrorPage()),
+                  );
           },
           child: Text('Pesquisar rota'),
         ),
         SizedBox(height: 70),
       ],
     );
+  }
+
+  bool pesquisarPontos(String pontoInicial, String pontoFinal) {
+    //existe ponto? se nao, return false
+    return false;
+    //se existir, procure o caminho return true;
   }
 }

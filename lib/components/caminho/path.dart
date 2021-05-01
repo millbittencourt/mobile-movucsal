@@ -47,9 +47,6 @@ class _SecondRoute extends State<SecondRoute> {
   }
 
   sendRequest() {
-    //fetch from api
-    fetchAlbum();
-
     //todo: change to whatever is the output from the api
     return FutureBuilder<Album>(
       future: futureAlbum,

@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(
           onPressed: () {
             pesquisarPontos(spotOneId, spotTwoId)
-                ? //aqui ja preciso ter os ids
+                ?
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -90,9 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  bool pesquisarPontos(String pontoInicial, String pontoFinal) {
+  bool pesquisarPontos(String pontoInicial, String pontoFinal) {  //todo: pesquisar se pontos existem
     //existe ponto? se nao, return false
-    return false;
-    //se existir, procure o caminho return true;
+    return true;
+    //se existir, return true e procure o caminho;
   }
 }

@@ -1,6 +1,8 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_movucsal/models/Album.dart';
+import 'package:mobile_movucsal/services/spotsApi.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class DropdownForm extends StatefulWidget {
@@ -20,24 +22,41 @@ class DropdownForm extends StatefulWidget {
 }
 
 class _DropdownForm extends State<DropdownForm> {
+  late Future<List<Album>> futureAlbum;
+
   @override
   void initState() {
     super.initState();
+    futureAlbum = fetchAllAlbums();
   }
 
   @override
   Widget build(BuildContext context) {
     String spotId = '';
-    return DropDownField(
-      onValueChanged: (dynamic value) {
-        spotId = value;
-        widget.onCountChanged(value);
-      },
-      value: spotId,
-      required: false,
-      hintText: widget.dropdownMessage,
-      labelText: widget.dropdownMessage,
-      items: <String>['One', 'Two', 'Three', 'Four'], //todo: lista da api,
+    return FutureBuilder<List<Album>>(
+        future: futureAlbum,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return DropDownField(
+              onValueChanged: (dynamic value) {
+                spotId = value;
+                widget.onCountChanged(value);
+              },
+              value: spotId,
+              required: false,
+              hintText: widget.dropdownMessage,
+              labelText: widget.dropdownMessage,
+              items: getAlbumsTitle(snapshot.data),
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+        return CircularProgressIndicator();
+        },
     );
+  }
+
+  getAlbumsTitle(List<Album>? data) {
+    return data?.map((album) => album.title).toList();
   }
 }

@@ -21,7 +21,7 @@ Future<List<Album>> fetchAllAlbums() async {
 
   if (response.statusCode == 200) {
     final result = json.decode(response.body);
-    print(result);
+
     return Album.allFromJson(result)!;
   } else {
     throw Exception('Failed to load album');

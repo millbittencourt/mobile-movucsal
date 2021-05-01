@@ -14,10 +14,7 @@ class Album {
     );
   }
 
-  static List<Album>? allFromJson(Map<String, dynamic> json) {
-    print('to aqui - allFromJson');
-    List<dynamic> dynList = json['result'];
-
-    return dynList.map((item) => Album.fromJson(item)).toList();
+  static List<Album>? allFromJson(List<dynamic> json) {
+    return json.map((album) => new Album.fromJson(album)).toList();
   }
 }

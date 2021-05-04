@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_movucsal/components/caminho/path.dart';
 import 'package:mobile_movucsal/components/errorPage.dart';
+import 'package:mobile_movucsal/services/spotsApi.dart';
 
 import 'dropdown.dart';
 
@@ -14,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String spotOneId = '';
+  String spotOne = '';
   String spotTwoId = '';
 
   @override
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         DropdownForm(
           dropdownMessage: _dropdownOne,
           onCountChanged: (String val) {
-            setState(() => spotOneId = val);
+            setState(() => spotOne = val);
           },
         ),
         SizedBox(height: 15),
@@ -70,18 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
         SizedBox(height: 30),
         ElevatedButton(
           onPressed: () {
-            pesquisarPontos(spotOneId, spotTwoId)
-                ?
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SecondRoute(title: '')) //todo: enviar o caminho
-                    )
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ErrorPage()),
-                  );
+            pesquisarPontos(spotOne, spotTwoId).then((spotResult) {
+              spotResult
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SecondRoute(title: '')) //todo: enviar o caminho
+                      )
+                  : Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ErrorPage()),
+                    );
+            });
           },
           child: Text('Pesquisar rota'),
         ),
@@ -90,9 +92,34 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  bool pesquisarPontos(String pontoInicial, String pontoFinal) {  //todo: pesquisar se pontos existem
-    //existe ponto? se nao, return false
-    return true;
-    //se existir, return true e procure o caminho;
+  Future<bool> pesquisarPontos(String pontoInicial, String pontoFinal) async {
+    if (pontoInicial == '' || pontoFinal == '') {
+      return Future<bool>.value(false);
+    }
+
+    String pontoInicialId = pontoInicial.split('\.')[0];
+    String pontoFinalId = pontoFinal.split('\.')[0];
+
+    bool albumResult = await albumExists(pontoInicialId);
+    if (albumResult == false) {
+      return Future<bool>.value(false);
+    }
+    albumResult = await albumExists(pontoFinalId);
+    if (albumResult == false) {
+      return Future<bool>.value(false);
+    }
+
+    return Future<bool>.value(true);
   }
+
+// Future<Object> _checkAlbum(String pontoId) async {
+//   bool spotResult = await albumExists(pontoId);
+//   if (spotResult == false) {
+//     print(' is false ');
+//     return false;
+//   } else {
+//     print(' is realll ');
+//     return true;
+//   }
+// }
 }

@@ -17,7 +17,7 @@ class _SecondRoute extends State<SecondRoute> {
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    futureAlbum = fetchDefaultAlbum();
   }
 
   @override

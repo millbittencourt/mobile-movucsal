@@ -13,7 +13,6 @@ class DropdownForm extends StatefulWidget {
   }) : super();
 
   final String dropdownMessage;
-  //final String spotId;
   final Function(String) onCountChanged;
 
   //chamou quem trabalha
@@ -37,7 +36,7 @@ class _DropdownForm extends State<DropdownForm> {
         future: futureAlbum,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return DropDownField(
+            return DropDownField( //todo: refator to accept key and string value
               onValueChanged: (dynamic value) {
                 spotId = value;
                 widget.onCountChanged(value);
@@ -46,7 +45,7 @@ class _DropdownForm extends State<DropdownForm> {
               required: false,
               hintText: widget.dropdownMessage,
               labelText: widget.dropdownMessage,
-              items: getAlbumsTitle(snapshot.data),
+              items: getAlbumsTitle(snapshot.data!),
             );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
@@ -56,7 +55,13 @@ class _DropdownForm extends State<DropdownForm> {
     );
   }
 
-  getAlbumsTitle(List<Album>? data) {
-    return data?.map((album) => album.title).toList();
+  getAlbumsTitle(List<Album> data) {
+    List<String> formattedList = [];
+
+    for (var i = 0; i < data.length; i++) {
+      formattedList.add(data[i].id.toString() + '. ' + data[i].title);
+    }
+    return formattedList;
+    //return data?.map((album) => album.title).toList();
   }
 }

@@ -17,7 +17,7 @@ Future<Album> fetchDefaultAlbum() async {
 }
 
 Future<bool> albumExists(String id) async {
-  final response = await http.get(Uri.https(URL_API, 'albums/${id}'));
+  final response = await http.get(Uri.https(URL_API, 'albums/$id'));
   if (response.statusCode == 200) {
     return true;
   } else {

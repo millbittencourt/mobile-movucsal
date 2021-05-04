@@ -73,7 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             pesquisarPontos(spotOne, spotTwoId).then((spotResult) {
               spotResult
-                  ? Navigator.push(
+                  ?
+              Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
@@ -111,15 +112,4 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Future<bool>.value(true);
   }
-
-// Future<Object> _checkAlbum(String pontoId) async {
-//   bool spotResult = await albumExists(pontoId);
-//   if (spotResult == false) {
-//     print(' is false ');
-//     return false;
-//   } else {
-//     print(' is realll ');
-//     return true;
-//   }
-// }
 }

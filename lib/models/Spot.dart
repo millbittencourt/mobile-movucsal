@@ -1,5 +1,4 @@
 class Spot {
-
   final int id;
   final String codigo;
   final String descricao;
@@ -11,8 +10,15 @@ class Spot {
   final String tipoPonto;
 
   Spot(
-      {required this.id, required this.codigo, required this.descricao, required this.predio, required this.acessivel, required this.latitude,
-        required this.longitude, required this.altura, required this.tipoPonto});
+      { required this.id,
+      required this.codigo,
+      required this.descricao,
+      required this.predio,
+      required this.acessivel,
+      required this.latitude,
+      required this.longitude,
+      required this.altura,
+      required this.tipoPonto });
 
   factory Spot.fromJson(Map<String, dynamic> json) {
     return Spot(

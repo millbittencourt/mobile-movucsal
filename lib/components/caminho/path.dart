@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_movucsal/models/Album.dart';
+import 'package:mobile_movucsal/models/Spot.dart';
 import 'package:mobile_movucsal/services/spotsApi.dart';
 
-class SecondRoute extends StatefulWidget {
-  SecondRoute({required this.title}) : super(); //todo: change to spots
+class PathPage extends StatefulWidget {
+  PathPage({required this.spotOne, required this.spotTwo}) : super();
 
-  final String title;
+  final String spotOne;
+  final String spotTwo;
 
   @override
-  _SecondRoute createState() => _SecondRoute();
+  _PathPage createState() => _PathPage();
 }
 
-class _SecondRoute extends State<SecondRoute> {
-  late Future<Album> futureAlbum;
+class _PathPage extends State<PathPage> {
+  late Future<Spot> futureSpot;
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchDefaultAlbum();
+    futureSpot = fetchDefaultSpot();
   }
 
   @override
@@ -46,21 +47,33 @@ class _SecondRoute extends State<SecondRoute> {
     );
   }
 
+  buscarCaminho(String pontoInicial, String pontoFinal) async {
+    String pontoInicialId = pontoInicial.split('\.')[0];
+    String pontoFinalId = pontoFinal.split('\.')[0];
+
+    var result = await getPath(pontoInicialId, pontoFinalId);
+      return result;
+  }
+
   sendRequest() {
-    //todo: change to whatever is the output from the api
-    return FutureBuilder<Album>(
-      future: futureAlbum,
+    return FutureBuilder<Spot>(
+      future: futureSpot,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Column(
             children: [
               Text(
-                'Título: ' + snapshot.data!.title,
+                'Código: ' + snapshot.data!.codigo,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5,
               ),
               Text(
-                'User id: ' + snapshot.data!.userId.toString(),
+                'Descricao: ' + snapshot.data!.descricao,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              Text(
+                'Prédio: ' + snapshot.data!.predio,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5,
               ),

@@ -16,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String spotOne = '';
-  String spotTwoId = '';
+  String spotTwo = '';
 
   @override
   void initState() {
@@ -27,7 +27,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //todo: (last) criar AppBar component
         title: Text(widget.title),
       ),
       body: Center(
@@ -65,20 +64,20 @@ class _MyHomePageState extends State<MyHomePage> {
         DropdownForm(
           dropdownMessage: _dropdownTwo,
           onCountChanged: (String val) {
-            setState(() => spotTwoId = val);
+            setState(() => spotTwo = val);
           },
         ),
         SizedBox(height: 30),
         ElevatedButton(
           onPressed: () {
-            pesquisarPontos(spotOne, spotTwoId).then((spotResult) {
+            pesquisarPontos(spotOne, spotTwo).then((spotResult) {
               spotResult
                   ?
               Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SecondRoute(title: '')) //todo: enviar o caminho
+                              PathPage(spotOne: spotOne, spotTwo: spotTwo)) //todo: enviar o caminho
                       )
                   : Navigator.push(
                       context,
@@ -101,11 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
     String pontoInicialId = pontoInicial.split('\.')[0];
     String pontoFinalId = pontoFinal.split('\.')[0];
 
-    bool albumResult = await albumExists(pontoInicialId);
+    bool albumResult = await spotExists(pontoInicialId);
     if (albumResult == false) {
       return Future<bool>.value(false);
     }
-    albumResult = await albumExists(pontoFinalId);
+    albumResult = await spotExists(pontoFinalId);
     if (albumResult == false) {
       return Future<bool>.value(false);
     }

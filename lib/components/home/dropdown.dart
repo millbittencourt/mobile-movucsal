@@ -26,7 +26,7 @@ class _DropdownForm extends State<DropdownForm> {
   @override
   void initState() {
     super.initState();
-    futureSpots = fetchAllSpots();
+    futureSpots = buscarPontos();
   }
 
   @override
@@ -34,25 +34,26 @@ class _DropdownForm extends State<DropdownForm> {
     String spotId = '';
 
     return FutureBuilder<List<Spot>>(
-        future: futureSpots,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return DropDownField( //todo: refator to accept key and string value
-              onValueChanged: (dynamic value) {
-                spotId = value;
-                widget.onCountChanged(value);
-              },
-              value: spotId,
-              required: false,
-              hintText: widget.dropdownMessage,
-              labelText: widget.dropdownMessage,
-              items: formatSpots(snapshot.data!),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
+      future: futureSpots,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return DropDownField(
+            //todo: refator to accept key and string value
+            onValueChanged: (dynamic value) {
+              spotId = value;
+              widget.onCountChanged(value);
+            },
+            value: spotId,
+            required: false,
+            hintText: widget.dropdownMessage,
+            labelText: widget.dropdownMessage,
+            items: formatSpots(snapshot.data!),
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
         return CircularProgressIndicator();
-        },
+      },
     );
   }
 

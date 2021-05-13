@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_movucsal/models/Spot.dart';
-import 'package:mobile_movucsal/services/spotsApi.dart';
 
 class PathPage extends StatefulWidget {
-  PathPage({required this.spotOne, required this.spotTwo}) : super();
+  PathPage({required this.path}) : super();
 
-  final String spotOne;
-  final String spotTwo;
+  final List<dynamic> path;
 
   @override
   _PathPage createState() => _PathPage();
 }
 
 class _PathPage extends State<PathPage> {
-  late Future<Spot> futureSpot;
-
   @override
   void initState() {
     super.initState();
-    futureSpot = fetchDefaultSpot();
   }
 
   @override
@@ -27,70 +21,37 @@ class _PathPage extends State<PathPage> {
       appBar: AppBar(
         title: Text("Caminho encontrado"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            sendRequest(),
-            SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Voltar!'),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(child: buildList()),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Voltar!'),
+          ),
+        ],
       ),
     );
   }
 
-  buscarCaminho(String pontoInicial, String pontoFinal) async {
-    String pontoInicialId = pontoInicial.split('\.')[0];
-    String pontoFinalId = pontoFinal.split('\.')[0];
-
-    var result = await getPath(pontoInicialId, pontoFinalId);
-      return result;
-  }
-
-  sendRequest() {
-    return FutureBuilder<Spot>(
-      future: futureSpot,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Column(
-            children: [
-              Text(
-                'Código: ' + snapshot.data!.codigo,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(
-                'Descricao: ' + snapshot.data!.descricao,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(
-                'Prédio: ' + snapshot.data!.predio,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(
-                'Id: ' + snapshot.data!.id.toString(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-
-        // By default, show a loading spinner.
-        return CircularProgressIndicator();
+  buildList() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: widget.path.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          height: 65,
+          child: Column(children: [
+            Text('${widget.path[index]}'),
+          ]),
+        );
       },
     );
+  }
+
+  Text formatResponse(List<String> data, BuildContext context) {
+    return Text("");
   }
 }

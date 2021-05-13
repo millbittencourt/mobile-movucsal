@@ -71,18 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(
           onPressed: () {
             pesquisarPontos(spotOne, spotTwo).then((spotResult) {
-              spotResult
-                  ?
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              PathPage(spotOne: spotOne, spotTwo: spotTwo)) //todo: enviar o caminho
-                      )
-                  : Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ErrorPage()),
-                    );
+              spotResult ? goToPathPage(spotOne, spotTwo) : goToErrorPage();
             });
           },
           child: Text('Pesquisar rota'),
@@ -90,6 +79,28 @@ class _MyHomePageState extends State<MyHomePage> {
         SizedBox(height: 70),
       ],
     );
+  }
+
+  Future goToErrorPage() => Navigator.push(
+      context, MaterialPageRoute(builder: (context) => ErrorPage()));
+
+  Future goToPathPage(spotOne, spotTwo) async {
+    String pontoInicialId = spotOne.split('\.')[0];
+    String pontoFinalId = spotTwo.split('\.')[0];
+
+    List<dynamic> caminhoTeste =
+        await buscarCaminho(pontoInicialId, pontoFinalId).then((result) {
+      if (result.teste.isNotEmpty) return result.teste;
+      return [];
+    });
+
+    if (caminhoTeste.isNotEmpty) {
+      return Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PathPage(path: caminhoTeste),
+          ));
+    }
   }
 
   Future<bool> pesquisarPontos(String pontoInicial, String pontoFinal) async {
@@ -100,11 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
     String pontoInicialId = pontoInicial.split('\.')[0];
     String pontoFinalId = pontoFinal.split('\.')[0];
 
-    bool albumResult = await spotExists(pontoInicialId);
+    bool albumResult = await existePonto(pontoInicialId);
     if (albumResult == false) {
       return Future<bool>.value(false);
     }
-    albumResult = await spotExists(pontoFinalId);
+    albumResult = await existePonto(pontoFinalId);
     if (albumResult == false) {
       return Future<bool>.value(false);
     }

@@ -3,7 +3,7 @@ class PathResponse {
   final int profundidade;
   final double custo;
   final double heuristica;
-  final List<String> teste;
+  final List<dynamic> teste;
 
   PathResponse({
     required this.acao,
@@ -22,6 +22,7 @@ class PathResponse {
       teste: json['teste'],
     );
   }
+
   static List<PathResponse>? allFromJson(List<dynamic> json) {
     return json.map((path) => new PathResponse.fromJson(path)).toList();
   }

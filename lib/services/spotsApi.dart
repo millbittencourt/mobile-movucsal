@@ -9,19 +9,15 @@ const URL_LOCAL = 'localhost:8080'; //http
 
 final erroGenerico = 'Erro ao carregar informações';
 
-Future<Spot> fetchDefaultSpot() async {
-  final response = await http.get(Uri.http(URL_LOCAL, 'pontos/1'));
+Future<PathResponse> buscarCaminho(
+    String pontoInicialId, String pontoFinalId) async {
+  var queryParameters = {
+    'pontoInicialId': pontoInicialId,
+    'pontoFinalId': pontoFinalId,
+  };
+  var uri = Uri.https(URL_API, '/agente', queryParameters);
 
-  if (response.statusCode == 200) {
-    return Spot.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception(erroGenerico);
-  }
-}
-
-Future<PathResponse> getPath(String pontoInicialId, String pontoFinalId) async {
-  final response = await http.get(Uri.http(URL_LOCAL,
-      '/agente?pontoInicialId=$pontoInicialId&pontoFinalId=$pontoFinalId'));
+  var response = await http.get(uri);
 
   if (response.statusCode == 200) {
     return PathResponse.fromJson(jsonDecode(response.body));
@@ -30,8 +26,8 @@ Future<PathResponse> getPath(String pontoInicialId, String pontoFinalId) async {
   }
 }
 
-Future<bool> spotExists(String id) async {
-  final response = await http.get(Uri.http(URL_LOCAL, 'pontos/$id'));
+Future<bool> existePonto(String id) async {
+  final response = await http.get(Uri.https(URL_API, 'pontos/$id'));
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -39,8 +35,8 @@ Future<bool> spotExists(String id) async {
   }
 }
 
-Future<List<Spot>> fetchAllSpots() async {
-  final response = await http.get(Uri.http(URL_LOCAL, 'pontos/'));
+Future<List<Spot>> buscarPontos() async {
+  final response = await http.get(Uri.https(URL_API, 'pontos/'));
 
   if (response.statusCode == 200) {
     final result = json.decode(response.body);

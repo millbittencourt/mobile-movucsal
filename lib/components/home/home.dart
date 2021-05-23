@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(
           onPressed: () {
             pesquisarPontos(spotOne, spotTwo).then((spotResult) {
-              spotResult ? goToPathPage(spotOne, spotTwo) : goToErrorPage();
+              spotResult ? goToPathPage(spotOne, spotTwo, isAccessible) : goToErrorPage();
             });
           },
           child: Text('Pesquisar rota'),
@@ -102,12 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Future goToErrorPage() => Navigator.push(
       context, MaterialPageRoute(builder: (context) => ErrorPage()));
 
-  Future goToPathPage(spotOne, spotTwo) async {
+  Future goToPathPage(spotOne, spotTwo, isAcessible) async {
     String pontoInicialId = spotOne.split('\.')[0];
     String pontoFinalId = spotTwo.split('\.')[0];
 
     List<dynamic> caminhoTeste =
-        await buscarCaminho(pontoInicialId, pontoFinalId).then((result) {
+        await buscarCaminho(pontoInicialId, pontoFinalId, isAccessible).then((result) {
       if (result.teste.isNotEmpty) return result.teste;
       return [];
     });

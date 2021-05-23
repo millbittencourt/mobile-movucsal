@@ -10,11 +10,11 @@ const URL_LOCAL = 'localhost:8080'; //http
 final erroGenerico = 'Erro ao carregar informações';
 
 Future<PathResponse> buscarCaminho(
-    String pontoInicialId, String pontoFinalId) async {
+    String pontoInicialId, String pontoFinalId, bool isAccessible) async {
   var queryParameters = {
     'pontoInicialId': pontoInicialId,
     'pontoFinalId': pontoFinalId,
-    // 'acessivel': acessivel,
+    'acessivel': isAccessible.toString(),
   };
   var uri = Uri.https(URL_API, '/agente', queryParameters);
 

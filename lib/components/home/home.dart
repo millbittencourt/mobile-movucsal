@@ -17,6 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String spotOne = '';
   String spotTwo = '';
+  bool isAccessible = false;
 
   @override
   void initState() {
@@ -54,6 +55,23 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 40),
+        Row(
+          children: [
+            Text(
+              "Desejo buscar apenas caminhos acessíveis",
+              textAlign: TextAlign.center,
+            ),
+            Switch(
+              value: isAccessible,
+              onChanged: (value) {
+                setState(() {
+                  isAccessible = value;
+                });
+              },
+            ),
+          ],
+        ),
+        // Switch(value: false, onChanged: acessivel = value),
         DropdownForm(
           dropdownMessage: _dropdownOne,
           onCountChanged: (String val) {
@@ -108,17 +126,18 @@ class _MyHomePageState extends State<MyHomePage> {
       return Future<bool>.value(false);
     }
 
-    String pontoInicialId = pontoInicial.split('\.')[0];
-    String pontoFinalId = pontoFinal.split('\.')[0];
-
-    bool albumResult = await existePonto(pontoInicialId);
-    if (albumResult == false) {
-      return Future<bool>.value(false);
-    }
-    albumResult = await existePonto(pontoFinalId);
-    if (albumResult == false) {
-      return Future<bool>.value(false);
-    }
+    //waiting to DropdownChange...
+    // String pontoInicialId = pontoInicial.split('\.')[0];
+    // String pontoFinalId = pontoFinal.split('\.')[0];
+    //
+    // bool albumResult = await existePonto(pontoInicialId);
+    // if (albumResult == false) {
+    //   return Future<bool>.value(false);
+    // }
+    // albumResult = await existePonto(pontoFinalId);
+    // if (albumResult == false) {
+    //   return Future<bool>.value(false);
+    // }
 
     return Future<bool>.value(true);
   }

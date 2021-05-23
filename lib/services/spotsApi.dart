@@ -14,6 +14,7 @@ Future<PathResponse> buscarCaminho(
   var queryParameters = {
     'pontoInicialId': pontoInicialId,
     'pontoFinalId': pontoFinalId,
+    // 'acessivel': acessivel,
   };
   var uri = Uri.https(URL_API, '/agente', queryParameters);
 

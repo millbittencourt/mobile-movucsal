@@ -24,34 +24,47 @@ class _PathPage extends State<PathPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: buildList()),
+          Expanded(
+            child: widget.path.length > 0
+                ? buildList()
+                : const Center(child: Text('Caminho não existe.')),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
             child: Text('Voltar!'),
           ),
+          SizedBox(height: 100),
         ],
       ),
     );
   }
 
   buildList() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(8),
+    return ListView.separated(
+      padding: const EdgeInsets.all(20),
       itemCount: widget.path.length,
       itemBuilder: (BuildContext context, int index) {
+        // print(widget.path);
         return Container(
           height: 65,
-          child: Column(children: [
-            Text('${widget.path[index]}'),
-          ]),
+          color: Colors.deepPurple[50],
+          child: Center(child:
+            Text(
+              getDescricaoPonto(index),
+            ),
+          ),
         );
       },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 
-  Text formatResponse(List<String> data, BuildContext context) {
-    return Text("");
-  }
+  String getDescricaoPonto(int index) =>
+      '${widget.path[index]["ponto"]["id"]}. '
+      '${widget.path[index]["ponto"]["descricao"]} ('
+      '${widget.path[index]["ponto"]["codigo"]}) '
+      'Prédio ${widget.path[index]["ponto"]["predio"]} ';
+  // 'Acessivel: ' + widget.path[index]["ponto"]["acessivel"] == 'true' ? 'sim' : 'não';
 }

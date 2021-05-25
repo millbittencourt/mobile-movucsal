@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     List<dynamic> caminhoTeste =
         await buscarCaminho(pontoInicialId, pontoFinalId, isAccessible).then((result) {
-      if (result.teste.isNotEmpty) return result.teste;
+      if (result.pontosVisitados.isNotEmpty) return result.pontosVisitados;
       return [];
     });
 

@@ -1,8 +1,8 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_movucsal/models/Spot.dart';
-import 'package:mobile_movucsal/services/spotsApi.dart';
+import 'package:movucsal/models/Spot.dart';
+import 'package:movucsal/services/spotsApi.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class DropdownForm extends StatefulWidget {
@@ -45,7 +45,7 @@ class _DropdownForm extends State<DropdownForm> {
             },
             value: spotId,
             required: false,
-            hintText: widget.dropdownMessage,
+            //hintText: widget.dropdownMessage,
             labelText: widget.dropdownMessage,
             items: formatSpots(snapshot.data!),
           );

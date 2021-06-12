@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_movucsal/components/caminho/path.dart';
-import 'package:mobile_movucsal/components/errorPage.dart';
-import 'package:mobile_movucsal/services/spotsApi.dart';
+import 'package:movucsal/components/caminho/path.dart';
+import 'package:movucsal/components/errorPage.dart';
+import 'package:movucsal/services/spotsApi.dart';
 
 import 'dropdown.dart';
 
@@ -17,7 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String spotOne = '';
   String spotTwo = '';
-  bool isAccessible = false;
+  bool isAccessible = true;
 
   @override
   void initState() {

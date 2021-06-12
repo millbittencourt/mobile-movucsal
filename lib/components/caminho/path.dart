@@ -62,7 +62,7 @@ class _PathPage extends State<PathPage> {
   }
 
   String getDescricaoPonto(int index) =>
-      '${widget.path[index]["ponto"]["id"]}. '
+      '${index+1}. '
       '${widget.path[index]["ponto"]["descricao"]} ('
       '${widget.path[index]["ponto"]["codigo"]}) '
       'Prédio ${widget.path[index]["ponto"]["predio"]} ';

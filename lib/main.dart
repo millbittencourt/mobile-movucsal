@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static const String _title = 'Welcome to MovUCSal';
+  static const String _title = 'Bem-vindas ao MovUCSal';
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

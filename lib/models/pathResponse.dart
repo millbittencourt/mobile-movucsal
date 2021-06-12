@@ -1,14 +1,9 @@
-import 'Spot.dart';
-
 class PathResponse {
 
   final int profundidade;
   final double custo;
   final double heuristica;
   final List pontosVisitados;
-  // tempo?
-  // distancia direta
-  // distancia real
 
   PathResponse({
     required this.profundidade,

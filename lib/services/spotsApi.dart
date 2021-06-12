@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mobile_movucsal/models/Spot.dart';
-import 'package:mobile_movucsal/models/pathResponse.dart';
+import 'package:movucsal/models/Spot.dart';
+import 'package:movucsal/models/pathResponse.dart';
 
 const URL_API = 'muv-ucsal.herokuapp.com';
 const URL_LOCAL = 'localhost:8080'; //http
